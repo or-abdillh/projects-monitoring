@@ -25,8 +25,8 @@
                     <input type="number" value="{{ $leader_id }}" readonly name="leader_id" class="form-control" placeholder="Type your leader ID here" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Progress</label>
-                    <input type="number" name="progress" class="form-control" placeholder="Type your progress here" required>
+                    <label class="form-label" data-role="progress-label">Progress</label>
+                    <input type="range" name="progress" data-role="progress-input" class="form-range" min="0" max="100" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Deadline</label>
@@ -44,4 +44,16 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+const progressInput = document.querySelector('[data-role=progress-input]')
+const progressLabel = document.querySelector('[data-role=progress-label]')
+
+progressInput.addEventListener('input', evt => {
+    progressLabel.innerHTML = `Progress ${ evt.target.value }%`
+})
+
+</script>
+
 @endsection

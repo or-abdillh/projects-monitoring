@@ -14,12 +14,18 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         // Get all projects with name
         $leader_id = Auth::user()->id;
         $projects = Project::where('leader_id', $leader_id)->get();
-        return view('home', compact('projects'));
+        return view('dashboard', compact('projects'));
     }
 
     /**

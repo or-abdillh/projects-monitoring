@@ -22,17 +22,7 @@
             </section>
             <!-- Button add nnew task -->
             <section class="mt-3">
-                <button type="" class="btn btn-primary">Tanbahkan Task baru</button>
-            </section>
-            <!-- Buttton Filter -->
-            <section class="form-group mt-3">
-                <label for="">Terapkan filter</label>
-                <select data-role="selectFilter" class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-                    <option value="ALL" selected>Task: All</option>
-                    <option value="PENDING">Task: PENDING</option>
-                    <option value="ON PROGRESS">Task: ON PROGRESS</option>
-                    <option value="DONE">Task: DONE</option>
-                </select>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#createNewTask:modal" class="btn btn-primary">Tanbahkan Task baru</button>
             </section>
             <table class="table mt-3">
                 <thead>
@@ -87,7 +77,7 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!-- Modal Update  -->
 <x-modal id="staticBackdrop" title="Perbaharui Progress Task">
     <x-slot:body>
         <form method="POST" action="{{ route('task.update', $project->id) }}">
@@ -115,10 +105,10 @@
     </x-slot>
 </x-modal>
 
+
 <script type="text/javascript">
 
 window.addEventListener('DOMContentLoaded', () => {
-    const rows = {{ Js::from($tasks) }}
 
     const triggerButtons = document.querySelectorAll('[data-role=triggerButton]')
     const fields = {
@@ -128,33 +118,11 @@ window.addEventListener('DOMContentLoaded', () => {
         description: document.querySelector('[name=description]')
     }
 
-    const selectFilterEl = document.querySelector('[data-role=selectFilter]') 
-    const recorders = document.querySelectorAll('[data-role=recorder]')
-
-    const filtering = key => {
-        recorders.forEach(recorder => {
-            console.log(recorder.dataset)
-            if ( recorder.dataset.filtered.toLowerCase() !== key ) recorder.style.display = 'none'
-            else if ( key === 'all' ) {
-                if ( recorder.style.display === 'none' ) recorder.style.display = 'block'
-            }
-            else {
-                if ( recorder.style.display === 'none' ) recorder.style.display = 'block'
-            }       
-        })
-    }
-
     const setSelectedOption = opt => {
         fields.statusOptions.forEach(option => {
             if ( option.value.toLowerCase() === opt.toLowerCase() ) option.setAttribute('selected', true)
         })
     }
-    
-    selectFilterEl.addEventListener('input', e => {
-        const key = e.target.value.toLowerCase()
-        console.log(key)
-        filtering(key)
-    })
 
     triggerButtons.forEach(btn => {
       btn.addEventListener('click', e => {
